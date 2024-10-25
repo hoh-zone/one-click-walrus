@@ -1,16 +1,21 @@
-import { ConnectButton, useCurrentAccount } from "@mysten/dapp-kit";
+import { ConnectButton, useCurrentAccount, useSuiClient } from "@mysten/dapp-kit";
 import { isValidSuiObjectId } from "@mysten/sui/utils";
 import { Box, Container, Flex, Heading } from "@radix-ui/themes";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Counter } from "./Counter";
 import { CreateCounter } from "./CreateCounter";
+import { CoinStruct, GetAllCoinsParams } from "@mysten/sui/client";
+import { Balance } from "./Balance";
 
 function App() {
   const currentAccount = useCurrentAccount();
+  const suiClient = useSuiClient();
   const [counterId, setCounter] = useState(() => {
     const hash = window.location.hash.slice(1);
     return isValidSuiObjectId(hash) ? hash : null;
   });
+
+
 
   return (
     <>
@@ -24,12 +29,13 @@ function App() {
         }}
       >
         <Box>
-          <Heading>One Click Walrus</Heading>
+          <Heading>One Click Walrus (testnet)</Heading>
         </Box>
 
         <Box>
           <ConnectButton />
         </Box>
+
       </Flex>
       <Container>
         <Container
@@ -39,23 +45,18 @@ function App() {
           style={{ background: "var(--gray-a2)", minHeight: 500 }}
         >
           {currentAccount ? (
-            counterId ? (
-              <Counter id={counterId} />
-            ) : (
-              <CreateCounter
-                onCreated={(id) => {
-                  window.location.hash = id;
-                  setCounter(id);
-                }}
-              />
-            )
+            <>
+              <Balance id={currentAccount.address} />
+            </>
           ) : (
             <Heading>Please connect your wallet</Heading>
           )}
         </Container>
       </Container>
+
     </>
   );
 }
 
 export default App;
+
