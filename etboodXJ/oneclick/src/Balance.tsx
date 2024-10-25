@@ -102,13 +102,14 @@ export function Balance({ id }: { id: string }) {
     //alert('start exchange: ' + inputValue + ' Sui to WAL');
 
     if (confirm('confirm: ' + inputValue + ' Sui to WAL ?')) {
-      if (!(parseInt(inputValue) > 0)) return;
+
       // 用户点击了“确定”
       console.log('start...');
       // 在这里执行你的交换逻辑
       const tx = new Transaction();
 
-      const to_add_amount = parseInt(inputValue) * base;
+      const to_add_amount = parseFloat(inputValue) * base;
+      console.log('to_add_amount', to_add_amount);
 
       const sui_coin = tx.splitCoins(tx.gas, [tx.pure.u64(to_add_amount)]);//
 
@@ -116,11 +117,11 @@ export function Balance({ id }: { id: string }) {
         arguments: [
           tx.object(exchangeObjectId),
           sui_coin,
-          tx.pure.u64(inputValue),
+          tx.pure.u64(to_add_amount),
         ],
         target: `${walPackageId}::${walModuleId}::exchange_for_wal`,
       });
-      tx.transferObjects([wal_coin], currentAccount.address);
+      tx.transferObjects([wal_coin, sui_coin], currentAccount.address);
 
       signAndExecute(
         {

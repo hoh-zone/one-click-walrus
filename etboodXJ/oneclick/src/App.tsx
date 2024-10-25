@@ -29,7 +29,7 @@ function App() {
         }}
       >
         <Box>
-          <Heading>One Click Walrus (testnet)</Heading>
+          <Heading>One Click Walrus (testnet) v0.1.5</Heading>
         </Box>
 
         <Box>

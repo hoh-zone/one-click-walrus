@@ -8,11 +8,7 @@
 
 ## 目录结构
 1. fontend 
-  dappkit
-2. move
-  sui move
-3. test
-  unit test
+  框架: dappkit
 
 ## 推进
 完成walrus的二进制安装
@@ -70,11 +66,10 @@ target\release\site-builder --config sites-config.yaml  publish --epochs 200 --s
 
 ubuntu20.04 发布成功 可以打开网页!
 
+发布网页到walrus上 获得object id
 ./target/release/site-builder --config ./sites-config.yaml  publish --epochs 200 --site-name oneclick ./distoneclick
 
-sites-config.yaml 配置文件 testnet 测试网的配置,原来的builder-example.yaml 已经不用了
-
-发布网页到walrus上并获得object id
+sites-config.yaml : testnet测试网的配置文件 , 原来的builder-example.yaml 已经不用了
 
 Resource operations performed:
   - created resource /assets/index-DZXkWKhh.js with blob ID qifvtgYu814eQ8q3DRvEHBW0HIg_MJkhshleFVXN_pc
@@ -83,12 +78,24 @@ Resource operations performed:
 The site routes were left unchanged
 
 Created new site: oneclick
-New site object ID: 0xa2345dee940ac6cbca06405c4d4d246cd224cccf380a98956b64b773d5669b72
+
+New site object ID: 
+
+0xa2345dee940ac6cbca06405c4d4d246cd224cccf380a98956b64b773d5669b72
+
 Browse the resulting site at: https://41jfnjnz4tzlsfsr3vedxzfwcpoyf0gy6o2r48l2kg8gbq5wtu.walrus.site
 
 在 https://testnet.suins.io/account/my-names 上注册一个名字并指向object id
+
 这里我们设置为 oneclick
+
 https://oneclick.walrus.site
 
 
 
+更新网页到walrus上
+./target/release/site-builder --config ./sites-config.yaml  update --epochs 200 ./distoneclick 0xa2345dee940ac6cbca06405c4d4d246cd224cccf380a98956b64b773d5669b72
+
+
+查看线上object
+https://testnet.suivision.xyz/object/0x0e60a946a527902c90bbc71240435728cd6dc26b9e8debc69f09b71671c3029b
